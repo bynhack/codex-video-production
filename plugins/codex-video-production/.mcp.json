@@ -1,0 +1,9 @@
+{
+  "mcpServers": {
+    "video-preview": {
+      "command": "node",
+      "args": ["./dist/server.mjs"],
+      "cwd": "."
+    }
+  }
+}

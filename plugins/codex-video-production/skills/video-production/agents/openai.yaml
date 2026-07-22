@@ -1,0 +1,5 @@
+interface:
+  display_name: "Video Production"
+  short_description: "Plan TVC production through browser reviews"
+  default_prompt: "Use $video-production to turn my rough request and optional product materials into a reviewed TVC plan. Stop at the implemented capability gate and do not generate unsupported media."
+  brand_color: "#E5A83A"

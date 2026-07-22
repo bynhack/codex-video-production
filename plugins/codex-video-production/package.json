@@ -1,0 +1,20 @@
+{
+  "name": "codex-video-production",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "A thin interactive video-production preview bridge for Codex.",
+  "scripts": {
+    "mcp": "node mcp/server.mjs",
+    "demo": "node scripts/demo.mjs",
+    "demo:tvc": "node scripts/demo.mjs",
+    "test": "node --test",
+    "validate:pipelines": "node scripts/validate-pipelines.mjs",
+    "check": "npm test && npm run validate:pipelines && node --check mcp/server.mjs && node --check preview/app.js"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "1.29.0",
+    "yaml": "^2.9.0",
+    "zod": "^4.2.1"
+  }
+}

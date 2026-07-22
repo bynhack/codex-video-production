@@ -1,0 +1,76 @@
+version: 1
+revision: 3
+id: tvc
+title: TVC 广告视频完整生产
+description: 从模糊需求与可选产品素材推进到逐 Unit 生成、合成和批准的完整 TVC；结构与提示词规划由 Host Agent 内部完成，用户审阅创意方向、实际分镜和实际视频。
+stages:
+  - id: clarification
+    label: 需求确认
+    goal: 把原始需求与素材整理为已确认的 TVC Brief。
+    view: clarification-form
+    prompt: stages/clarification.md
+    promptVersion: 3
+    requires: [request.md, assets/index.json]
+    produces: [clarification.json, brief.md]
+    review: { kind: form, required: true }
+    optional: false
+  - id: research
+    label: 市场调研
+    goal: 形成有来源、能直接支撑创意策划的产品、受众、品类和竞品洞察。
+    view: research-document
+    prompt: stages/research.md
+    promptVersion: 3
+    requires: [brief.md, assets/index.json]
+    produces: [research.md, research-sources.json]
+    review: { kind: none, required: false }
+    optional: false
+  - id: proposal
+    label: 创意提案
+    goal: 提供三至四个完整文字提案，以一张全片概念故事板视觉化所选方向，并取得最终确认。
+    view: proposal-comparison
+    prompt: stages/proposal.md
+    promptVersion: 4
+    requires: [brief.md, research.md, research-sources.json, assets/index.json]
+    produces: [proposals/index.json, proposals/*.md, proposals/concept-storyboard-request.json, proposals/concept-storyboard.png, proposals/selected.json]
+    review: { kind: select, required: true }
+    optional: false
+  - id: storyboard-production
+    label: 分镜制作
+    goal: 内部完成视频结构、连续性参考图和逐 Unit 分镜策划，生成实际故事板并由用户逐 Unit 确认。
+    view: storyboard-workspace
+    prompt: stages/storyboard-production.md
+    promptVersion: 4
+    requires: [brief.md, proposals/index.json, proposals/*.md, proposals/concept-storyboard.png, proposals/selected.json, assets/index.json]
+    produces: [structure.json, continuity/index.json, units/*/storyboard-plan.json, units/*/storyboard-candidates/*, units/*/storyboard.png]
+    review: { kind: approve, required: true }
+    optional: false
+  - id: unit-video-production
+    label: 视频片段制作
+    goal: 内部生成逐 Unit 视频方案，按已批准故事板批量制作并由用户选择实际片段。
+    view: clip-review
+    prompt: stages/unit-video-production.md
+    promptVersion: 3
+    requires: [structure.json, continuity/index.json, assets/index.json, units/*/storyboard.png]
+    produces: [units/*/plan.json, units/*/clip-candidates/*, units/*/clip.mp4]
+    review: { kind: approve, required: true }
+    optional: false
+  - id: package-review
+    label: 成片检查
+    goal: 审计 Brief、结构、分镜、Plan 与 Clips 的映射和证据是否完整一致。
+    view: package-review-document
+    prompt: stages/package-review.md
+    promptVersion: 3
+    requires: [brief.md, structure.json, units/*/storyboard.png, units/*/plan.json, units/*/clip.mp4]
+    produces: [package-review.md]
+    review: { kind: none, required: false }
+    optional: false
+  - id: assembly
+    label: 成片交付
+    goal: 按 Unit 顺序确定性合成 Clips、探测交付属性并取得最终批准。
+    view: final-review
+    prompt: stages/assembly.md
+    promptVersion: 3
+    requires: [brief.md, structure.json, package-review.md, units/*/clip.mp4]
+    produces: [final/assembly.json, final/probe.json, final/tvc.mp4]
+    review: { kind: approve, required: true }
+    optional: false

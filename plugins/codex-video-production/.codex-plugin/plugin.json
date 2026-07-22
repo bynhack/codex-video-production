@@ -1,0 +1,23 @@
+{
+  "name": "codex-video-production",
+  "version": "0.1.0+codex.20260722084955",
+  "description": "Codex-driven video production with a local interactive review surface.",
+  "author": {
+    "name": "bynhack"
+  },
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Codex Video Production",
+    "shortDescription": "Plan and review TVC production in a local Preview.",
+    "longDescription": "Keeps Codex in control while a local browser surface handles structured clarification, sourced planning, proposal comparison, per-Unit media review, and final TVC approval.",
+    "developerName": "bynhack",
+    "category": "Creative",
+    "capabilities": [
+      "Interactive video review",
+      "Human approval checkpoints",
+      "Local preview bridge"
+    ],
+    "defaultPrompt": "Use $video-production. Run the selected TVC stage through Preview and follow every durable media and approval contract."
+  },
+  "mcpServers": "./.mcp.json"
+}
