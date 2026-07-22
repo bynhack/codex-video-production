@@ -5,16 +5,20 @@
   "type": "module",
   "description": "A thin interactive video-production preview bridge for Codex.",
   "scripts": {
+    "build:mcp": "node scripts/build-mcp.mjs",
     "mcp": "node mcp/server.mjs",
     "demo": "node scripts/demo.mjs",
     "demo:tvc": "node scripts/demo.mjs",
     "test": "node --test",
     "validate:pipelines": "node scripts/validate-pipelines.mjs",
-    "check": "npm test && npm run validate:pipelines && node --check mcp/server.mjs && node --check preview/app.js"
+    "check": "npm run build:mcp && npm test && npm run validate:pipelines && node --check mcp/server.mjs && node --check dist/server.mjs && node --check preview/app.js"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "1.29.0",
     "yaml": "^2.9.0",
     "zod": "^4.2.1"
+  },
+  "devDependencies": {
+    "esbuild": "0.25.10"
   }
 }
